@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package randomPackage;
+
+service Random {
+    // basic
+    rpc PingPong(PingRequest) returns (PongResponse) {};
+
+    // server streaming
+    rpc RNG(NumberRequest) returns (stream NumberResponse) {};
+
+    // client streaming
+    rpc TodoList(stream TodoRequest) returns (TodoResponse) {};
+
+    // bidirectional streaming
+    rpc Chat(stream ChatRequest) returns (stream ChatResponse) {};
+}
+
+// basic
+message PingRequest {
+    string message = 1;
+    // int32 val = 2;
+}
+
+message PongResponse {
+    string message = 1;
+}
+
+// server streaming
+message NumberRequest {
+    int32 maxVal = 1;
+}
+
+message NumberResponse {
+    int32 num = 1;
+}
+
+// client streaming
+message TodoRequest {
+    string todo = 1;
+    string status = 2;
+}
+
+message TodoResponse {
+    repeated TodoRequest todos = 1;
+}
+
+// bidirectional streaming
+message ChatRequest {
+    string message = 1;
+}
+
+message ChatResponse {
+    string username = 1;
+    string message = 2;
+}
